@@ -1,3 +1,25 @@
 micronaut:
   application:
     name: hero
+datasources:
+  default:
+    url: ${DATABASE_URL:`jdbc:postgresql://localhost:5432/hero_votes`}
+    username: ${DATABASE_USER:`hero`}
+    password: ${DATABASE_PASSWORD:`hero`}
+#r2dbc:
+#  datasources:
+#    default:
+#      url: r2dbc:postgresql://localhost:5432/hero_votes
+#      username: hero
+#      password: hero
+jpa:
+  default:
+    entity-scan:
+      packages: 'dc.vilnius'
+    properties:
+      hibernate:
+        bytecode:
+          provider: none
+        hbm2ddl:
+          auto: update
+
