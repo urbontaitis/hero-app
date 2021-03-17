@@ -15,7 +15,9 @@ datasources:
 jpa:
   default:
     entity-scan:
-      packages: 'dc.vilnius'
+      packages:
+        - 'dc.vilnius.hero.domain'
+        - 'dc.vilnius.vote.domain'
     properties:
       hibernate:
         bytecode:
