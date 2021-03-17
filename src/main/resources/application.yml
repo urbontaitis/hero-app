@@ -21,5 +21,8 @@ jpa:
         bytecode:
           provider: none
         hbm2ddl:
-          auto: update
-
+          auto: none
+flyway:
+  datasources:
+    default:
+      enabled: true
