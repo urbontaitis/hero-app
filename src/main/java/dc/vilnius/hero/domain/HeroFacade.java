@@ -2,6 +2,7 @@ package dc.vilnius.hero.domain;
 
 import static java.util.stream.Collectors.toList;
 
+import dc.vilnius.hero.dto.DeleteHero;
 import java.util.List;
 import java.util.stream.StreamSupport;
 import javax.inject.Inject;
@@ -24,5 +25,14 @@ public class HeroFacade {
 
   public Hero save(Hero hero) {
     return heroRepository.save(hero);
+  }
+
+  public List<Hero> save(List<Hero> heroes) {
+    var saved = heroRepository.saveAll(heroes);
+    return StreamSupport.stream(saved.spliterator(), false).collect(toList());
+  }
+
+  public void delete(DeleteHero deleteHero) {
+    heroRepository.deleteByUsername(deleteHero.getUsername());
   }
 }
