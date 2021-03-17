@@ -1,6 +1,10 @@
 package dc.vilnius.vote.domain;
 
+import static java.util.stream.Collectors.toList;
+
 import dc.vilnius.vote.dto.SubmitVote;
+import java.util.List;
+import java.util.stream.StreamSupport;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -19,5 +23,10 @@ public class VoteFacade {
     vote.setEmail(submitVote.getEmail());
     vote.setComment(submitVote.getComment());
     return voteRepository.save(vote);
+  }
+
+  public List<Vote> findAll() {
+    var votes = voteRepository.findAll();
+    return StreamSupport.stream(votes.spliterator(), false).collect(toList());
   }
 }

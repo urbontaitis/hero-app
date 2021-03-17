@@ -1,6 +1,9 @@
 micronaut:
   application:
     name: hero
+  security:
+    basic-auth:
+      enabled: true
 datasources:
   default:
     url: ${DATABASE_URL:`jdbc:postgresql://localhost:5432/hero_votes`}
@@ -28,3 +31,7 @@ flyway:
   datasources:
     default:
       enabled: true
+supabase:
+  url: ${SUPABASE_URL}
+  api-key: ${SUPABASE_API_KEY}
+  token-endpoint: ${SUPABASE_TOKEN_URL:`/auth/v1/token?grant_type=password`}
