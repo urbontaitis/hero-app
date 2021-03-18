@@ -19,8 +19,7 @@ public class HeroFacade {
   }
 
   public List<Hero> heroes() {
-    var heroes = heroRepository.findAll();
-    return StreamSupport.stream(heroes.spliterator(), false).collect(toList());
+    return heroRepository.findAllOrderByLastName();
   }
 
   public Hero save(Hero hero) {
