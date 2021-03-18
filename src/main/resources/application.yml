@@ -61,6 +61,6 @@ flyway:
     default:
       enabled: true
 supabase:
-  url: ${SUPABASE_URL}
-  api-key: ${SUPABASE_API_KEY}
+  url: ${SUPABASE_URL:`n\a`}
+  api-key: ${SUPABASE_API_KEY:`n\a`}
   token-endpoint: ${SUPABASE_TOKEN_URL:`/auth/v1/token?grant_type=password`}
