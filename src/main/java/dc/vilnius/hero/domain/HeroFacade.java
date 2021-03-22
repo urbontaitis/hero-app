@@ -3,6 +3,7 @@ package dc.vilnius.hero.domain;
 import static java.util.stream.Collectors.toList;
 
 import dc.vilnius.hero.dto.DeleteHero;
+import dc.vilnius.hero.dto.HeroNotFound;
 import java.util.List;
 import java.util.stream.StreamSupport;
 import javax.inject.Inject;
@@ -34,4 +35,9 @@ public class HeroFacade {
   public void delete(DeleteHero deleteHero) {
     heroRepository.deleteByUsername(deleteHero.getUsername());
   }
+
+  public Hero findByEmail(String email) {
+    return heroRepository.findByEmail(email).orElseThrow(() -> new HeroNotFound(email));
+  }
+
 }

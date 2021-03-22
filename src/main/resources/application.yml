@@ -64,3 +64,8 @@ supabase:
   url: ${SUPABASE_URL:`n\a`}
   api-key: ${SUPABASE_API_KEY:`n\a`}
   token-endpoint: ${SUPABASE_TOKEN_URL:`/auth/v1/token?grant_type=password`}
+mattermost:
+  url: ${MATTERMOST_URL:`n\a`}
+  path: '/api/v4'
+  token: ${MATTERMOST_TOKEN:`n\a`}
+  bot-name: ${MATTERMOST_BOT_NAME:`n\a`}

@@ -4,13 +4,19 @@ import dc.vilnius.hero.domain.Hero;
 import dc.vilnius.hero.domain.HeroFacade;
 import dc.vilnius.hero.dto.CreateHeroes;
 import dc.vilnius.hero.dto.DeleteHero;
+import dc.vilnius.hero.dto.HeroNotFound;
 import dc.vilnius.infrastructure.auth.AppRoles;
+import io.micronaut.http.HttpRequest;
+import io.micronaut.http.HttpResponse;
 import io.micronaut.http.MediaType;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Delete;
+import io.micronaut.http.annotation.Error;
 import io.micronaut.http.annotation.Get;
 import io.micronaut.http.annotation.Post;
 import io.micronaut.http.annotation.Put;
+import io.micronaut.http.hateoas.JsonError;
+import io.micronaut.http.hateoas.Link;
 import io.micronaut.security.annotation.Secured;
 import io.micronaut.security.rules.SecurityRule;
 import io.micronaut.validation.Validated;
@@ -51,5 +57,12 @@ class HeroController {
   @Delete(consumes = MediaType.APPLICATION_JSON)
   void delete(@Valid DeleteHero deleteHero) {
     heroFacade.delete(deleteHero);
+  }
+
+  @Error(value = HeroNotFound.class, global = true)
+  public HttpResponse<JsonError> handle(HttpRequest request, HeroNotFound e) {
+    JsonError error = new JsonError(e.getMessage())
+        .link(Link.SELF, Link.of(request.getUri()));
+    return HttpResponse.<JsonError>notFound().body(error);
   }
 }
