@@ -7,6 +7,9 @@ import javax.inject.Singleton;
 
 @Singleton
 class MessageSender {
+
+  private static final String BOT_MESSAGE_TEMPLATE = "Hey, I'm Hero bot, and this month votes for you are: \n %s";
+
   private final MattermostClient mattermostClient;
 
   public MessageSender(MattermostClient mattermostClient) {
@@ -19,6 +22,7 @@ class MessageSender {
   }
 
   private ChannelResponse send(String channelId, String message) {
-    return mattermostClient.send(new ChannelPost(channelId, message)).blockingGet();
+    var botMessage = String.format(BOT_MESSAGE_TEMPLATE, message);
+    return mattermostClient.send(new ChannelPost(channelId, botMessage)).blockingGet();
   }
 }

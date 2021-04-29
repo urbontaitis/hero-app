@@ -23,7 +23,7 @@ class MessageCollector {
 
   private Envelope transform(String email, List<Vote> votes) {
     var username = heroFacade.findByEmail(email).getUsername();
-    var messages = votes.stream().map(Vote::getComment).collect(toList());
+    var messages = votes.stream().map(v -> String.format("* %s", v.getComment())).collect(toList());
     return new Envelope(username, messages);
   }
 
