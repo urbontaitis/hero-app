@@ -2,14 +2,16 @@
 
 ## Run
 Set these environment variables:
-ALLOWED_ORIGIN=
-DATABASE_PASSWORD=
-DATABASE_URL=
-DATABASE_USER=
-MICRONAUT_ENVIRONMENTS=prod;
+MICRONAUT_ENVIRONMENTS=dev;
 SUPABASE_API_KEY=
 SUPABASE_URL=
 
+Start local database
+```bash
+docker compose up -d
+```
+
+Start application
 ```bash
 ./gradlew run
 ```
