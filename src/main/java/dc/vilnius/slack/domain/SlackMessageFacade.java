@@ -32,11 +32,13 @@ import java.util.Locale;
 import java.util.Map;
 
 import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toMap;
 
 public class SlackMessageFacade {
 
+    private static final int MAX_FIELDS_COUNT = 10;
     private final Logger logger = LoggerFactory.getLogger(SlackMessageFacade.class);
 
     private final KudosFacade kudosFacade;
@@ -122,18 +124,32 @@ public class SlackMessageFacade {
         blocks.add(DividerBlock.builder().build());
         blocks.addAll(addCurrentMonthLeaderboard(groupedHeroes));
         blocks.add(DividerBlock.builder().build());
+        blocks.addAll(addCurrentMonthMessages(groupedHeroes));
+        return blocks;
+    }
+
+    private List<LayoutBlock> addCurrentMonthMessages(Map<String, List<KudosDto>> groupedHeroes) {
+        var blocks = new ArrayList<LayoutBlock>();
+        blocks.add(SectionBlock.builder().text(PlainTextObject.builder().text("Votes:").build()).build());
+        for (String hero : groupedHeroes.keySet()) {
+            var sectionValues = new ArrayList<TextObject>();
+            var messages = groupedHeroes.get(hero).stream().map(KudosDto::message).collect(joining("\n"));
+            var text = "*<@" + hero + ">* \n " + messages;
+            sectionValues.add(MarkdownTextObject.builder().text(text).build());
+            blocks.add(SectionBlock.builder().fields(sectionValues).build());
+            blocks.add(DividerBlock.builder().build());
+        }
         return blocks;
     }
 
     private List<LayoutBlock> addCurrentMonthLeaderboard(Map<String, List<KudosDto>> groupedHeroes) {
         var blocks = new ArrayList<LayoutBlock>();
-        var heroes = groupedHeroes.keySet();
-        var maxFieldsCount = 10;
+        blocks.add(SectionBlock.builder().text(PlainTextObject.builder().text("Leaderboard table:").build()).build());
         var sectionValues = new ArrayList<TextObject>();
         sectionValues.add(MarkdownTextObject.builder().text("*Hero*").build());
         sectionValues.add(MarkdownTextObject.builder().text("*Vote count*").build());
-        for (String hero : heroes) {
-            if (sectionValues.size() >= maxFieldsCount) {
+        for (String hero : groupedHeroes.keySet()) {
+            if (sectionValues.size() >= MAX_FIELDS_COUNT) {
                 blocks.add(SectionBlock.builder().fields(sectionValues).build());
                 sectionValues = new ArrayList<>();
             }
