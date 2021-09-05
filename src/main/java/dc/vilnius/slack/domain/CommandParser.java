@@ -13,15 +13,17 @@ public class CommandParser {
 
   static SlackMessage parse(String message) {
     var usersMatcher = USER_PATTERN.matcher(message);
-    var usernames = new ArrayList<String>();
+    var users = new ArrayList<String>();
     while(usersMatcher.find()) {
       for(int i = 1; i <= usersMatcher.groupCount(); i++) {
-        usernames.add(usersMatcher.group(i));
+        var raw = usersMatcher.group(i).split("\\|");
+        var id = raw[0].replace("@", "");
+        users.add(id);
       }
     }
     var messageMatcher = MESSAGE_PATTERN.matcher(message);
     var parsedMessage =  messageMatcher.find() ? messageMatcher.group(1).strip() : null;
 
-    return new SlackMessage(usernames, parsedMessage);
+    return new SlackMessage(users, parsedMessage);
   }
 }

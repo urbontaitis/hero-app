@@ -39,7 +39,7 @@ public class KudosFacade {
         .collect(toList());
   }
 
-  public List<KudosDto> findKudosBy(String channelId) {
+  public List<KudosDto> findAllCurrentMonthKudosBy(String channelId) {
     var currentTime = LocalDate.now().atStartOfDay();
     var firstDayOfMonth = currentTime.with(TemporalAdjusters.firstDayOfMonth());
     var lastDayOfMonth = currentTime.with(TemporalAdjusters.lastDayOfMonth());

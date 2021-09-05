@@ -1,31 +1,26 @@
 package dc.vilnius.slack.domain
 
+
 import spock.lang.Specification
 import spock.lang.Unroll
 
 class SlackMessageParserAcceptanceSpec extends Specification {
 
-    CommandParser testObject
-
-    def "setup"() {
-        testObject = new CommandParser()
-    }
-
     @Unroll
-    def "Parses '#givenMessage' message into '#usernames' and '#message'"() {
+    def "Parses '#givenMessage' message into '#users' and '#message'"() {
         when:
-        def result = testObject.parse(givenMessage)
+        def result = CommandParser.parse(givenMessage)
 
         then:
-        result.usernames() == usernames
+        result.users() == users
         result.message() == message
 
         where:
-        givenMessage                              | usernames                          | message
-        "@username good work!"                    | ["@username"]                      | "good work!"
-        "@name.surname @username you are awesome" | ["@name.surname", "@username"]     | "you are awesome"
-        "@name, @surname, @username you rock 🤘"  | ["@name", "@surname", "@username"] | "you rock 🤘"
-        "@name.z.surname lol 🤣"                  | ["@name.z.surname"]                | "lol 🤣"
+        givenMessage                                                                | users                                  | message
+        "<@RANDOMID|username> good work!"                                           | ["RANDOMID"]                           | "good work!"
+        "<@RANDOMID1|name.surname> <@RANDOMID|username> you are awesome"            | ["RANDOMID1", "RANDOMID"]              | "you are awesome"
+        "<@RANDOMID2|name>, <@RANDOMID3|surname>, <@RANDOMID|username> you rock 🤘" | ["RANDOMID2", "RANDOMID3", "RANDOMID"] | "you rock 🤘"
+        "<@RANDOMID4|name.z.surname> lol 🤣"                                        | ["RANDOMID4"]                         | "lol 🤣"
 
     }
 
