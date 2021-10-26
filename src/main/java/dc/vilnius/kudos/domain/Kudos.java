@@ -2,6 +2,7 @@ package dc.vilnius.kudos.domain;
 
 import io.micronaut.data.annotation.DateCreated;
 import java.time.LocalDateTime;
+import java.util.Objects;
 import java.util.UUID;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -65,5 +66,23 @@ class Kudos {
 
   public void setCreateDate(LocalDateTime createDate) {
     this.createDate = createDate;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    Kudos kudos = (Kudos) o;
+    return channel.equals(kudos.channel) && username.equals(kudos.username) && message.equals(
+        kudos.message);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(channel, username, message);
   }
 }

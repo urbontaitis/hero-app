@@ -1,6 +1,7 @@
 package dc.vilnius.kudos.domain;
 
 import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.toSet;
 
 import dc.vilnius.kudos.dto.GiveKudos;
 import dc.vilnius.kudos.dto.KudosDto;
@@ -44,6 +45,7 @@ public class KudosFacade {
     var firstDayOfMonth = currentTime.with(TemporalAdjusters.firstDayOfMonth());
     var lastDayOfMonth = currentTime.with(TemporalAdjusters.lastDayOfMonth());
     return kudosRepository.findByChannelAndCreateDateBetweenOrderByUsername(channelId,
-        firstDayOfMonth, lastDayOfMonth).stream().map(KudosMapper::entity2Dto).collect(toList());
+            firstDayOfMonth, lastDayOfMonth).stream().map(KudosMapper::entity2Dto).collect(toSet())
+        .stream().collect(toList());
   }
 }
