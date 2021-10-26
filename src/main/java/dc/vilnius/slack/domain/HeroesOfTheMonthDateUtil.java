@@ -1,7 +1,6 @@
 package dc.vilnius.slack.domain;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.temporal.TemporalAdjusters;
 
 public class HeroesOfTheMonthDateUtil {
