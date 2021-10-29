@@ -10,8 +10,7 @@ public class HeroesOfTheMonthDateUtil {
   public static boolean isAllowedToRevealHeroesLeaderboard(LocalDate date) {
     var lastDayOfMonth = date.with(TemporalAdjusters.lastDayOfMonth()).plusDays(1);
     var allowedDate = heroesLeaderBoardAvailableFrom(date);
-    var isAllowed = date.isAfter(allowedDate) && date.isBefore(lastDayOfMonth);
-    return isAllowed;
+    return date.isAfter(allowedDate) && date.isBefore(lastDayOfMonth);
   }
 
   public static LocalDate heroesLeaderBoardAvailableFrom(LocalDate date) {
