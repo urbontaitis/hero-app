@@ -54,7 +54,7 @@ public class SlackFactory {
 
       var currentDate = LocalDate.now();
       if (isAllowedToRevealHeroesLeaderboard(currentDate)) {
-        return ctx.ack("It's too soon to reveal this month heroes! Available from:"
+        return ctx.ack("It's too soon to reveal this month heroes! Available from: "
             + heroesLeaderBoardAvailableFrom(currentDate));
       } else {
         slackMessageFacade.handleHeroOfTheMonth(channelId, userId);
