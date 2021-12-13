@@ -12,7 +12,7 @@ import dc.vilnius.slack.domain.SlackMessageFacade;
 import io.micronaut.context.annotation.Factory;
 import java.time.LocalDate;
 import java.util.stream.Collectors;
-import javax.inject.Singleton;
+import jakarta.inject.Singleton;
 
 @Factory
 public class SlackFactory {

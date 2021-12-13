@@ -5,13 +5,13 @@ import static java.util.stream.Collectors.toSet;
 
 import dc.vilnius.kudos.dto.GiveKudos;
 import dc.vilnius.kudos.dto.KudosDto;
+import jakarta.inject.Inject;
+import jakarta.inject.Singleton;
 import java.time.LocalDate;
 import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.StreamSupport;
-import javax.inject.Inject;
-import javax.inject.Singleton;
 
 @Singleton
 public class KudosFacade {
