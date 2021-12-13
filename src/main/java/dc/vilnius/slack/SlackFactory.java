@@ -27,9 +27,7 @@ public class SlackFactory {
     App app = new App(appConfig);
     var slackMessageFacade = new SlackMessageFacade(kudosFacade, appConfig);
 
-    app.command("/hero-ping", (req, ctx) -> {
-      return ctx.ack("pong");
-    });
+    app.command("/hero-ping", (req, ctx) -> ctx.ack("pong"));
 
     app.command("/hero-vote", (req, ctx) -> {
       var commandArgText = req.getPayload().getText();
