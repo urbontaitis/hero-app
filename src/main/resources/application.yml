@@ -1,16 +1,6 @@
 micronaut:
   application:
     name: hero
-  server:
-    cors:
-      enabled: true
-      configurations:
-        web:
-          allowedOrigins: ${ALLOWED_ORIGIN:``}
-          allowedMethods:
-            - OPTIONS
-            - GET
-            - POST
   router:
     static-resources:
       swagger:
@@ -39,7 +29,3 @@ flyway:
   datasources:
     default:
       enabled: true
-supabase:
-  url: ${SUPABASE_URL:`n\a`}
-  api-key: ${SUPABASE_API_KEY:`n\a`}
-  token-endpoint: ${SUPABASE_TOKEN_URL:`/auth/v1/token?grant_type=password`}

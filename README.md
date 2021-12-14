@@ -3,8 +3,6 @@
 ## Run
 Set these environment variables:
 MICRONAUT_ENVIRONMENTS=dev;
-SUPABASE_API_KEY=
-SUPABASE_URL=
 
 Start local database
 ```bash
