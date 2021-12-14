@@ -11,6 +11,7 @@ import dc.vilnius.slack.domain.MessageGenerator;
 import dc.vilnius.slack.domain.SlackMessageFacade;
 import io.micronaut.context.annotation.Factory;
 import java.time.LocalDate;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import jakarta.inject.Singleton;
 
@@ -49,14 +50,15 @@ public class SlackFactory {
     app.command("/heroes-of-the-month", (req, ctx) -> {
       var channelId = req.getPayload().getChannelId();
       var userId = req.getPayload().getUserId();
-
-      var currentDate = LocalDate.now();
-      if (isAllowedToRevealHeroesLeaderboard(currentDate)) {
-        slackMessageFacade.handleHeroOfTheMonth(channelId, userId);
+      var commandArgText = req.getPayload().getText();
+      var date = Optional.ofNullable(commandArgText)
+          .map(LocalDate::parse).orElse(LocalDate.now());
+      if (isAllowedToRevealHeroesLeaderboard(date)) {
+        slackMessageFacade.handleHeroOfTheMonth(channelId, userId, date);
         return ctx.ack("Working on it!");
       } else {
         return ctx.ack("It's too soon to reveal this month heroes! Available from: "
-            + heroesLeaderBoardAvailableFrom(currentDate));
+            + heroesLeaderBoardAvailableFrom(date));
       }
     });
 

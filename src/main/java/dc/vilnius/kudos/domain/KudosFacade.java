@@ -40,8 +40,8 @@ public class KudosFacade {
         .collect(toList());
   }
 
-  public List<KudosDto> findAllCurrentMonthKudosBy(String channelId) {
-    var currentTime = LocalDate.now().atStartOfDay();
+  public List<KudosDto> findAllGivenMonthKudosBy(String channelId, LocalDate date) {
+    var currentTime = date.atStartOfDay();
     var firstDayOfMonth = currentTime.with(TemporalAdjusters.firstDayOfMonth());
     var lastDayOfMonth = currentTime.with(TemporalAdjusters.lastDayOfMonth());
     return kudosRepository.findByChannelAndCreateDateBetweenOrderByUsername(channelId,

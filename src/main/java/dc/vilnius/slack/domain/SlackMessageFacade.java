@@ -91,9 +91,9 @@ public class SlackMessageFacade {
         .forEach(user -> scheduleMessageAtTheEndOfTheMonth(user, giveKudos.message()));
   }
 
-  public void handleHeroOfTheMonth(String channelId, String requestedBy) {
-    var sortedHeroesByMessageSize = sortedCurrentMonthHeroesByMessageSize(channelId);
-    var blocks = buildBlocks(sortedHeroesByMessageSize);
+  public void handleHeroOfTheMonth(String channelId, String requestedBy, LocalDate date) {
+    var sortedHeroesByMessageSize = sortedCurrentMonthHeroesByMessageSize(channelId, date);
+    var blocks = buildBlocks(sortedHeroesByMessageSize, date);
     blocks.addAll(requestedByMessage(requestedBy));
     ChatPostMessageRequest message = ChatPostMessageRequest.builder()
         .channel(channelId)
@@ -113,8 +113,8 @@ public class SlackMessageFacade {
     }
   }
 
-  private Map<String, List<KudosDto>> sortedCurrentMonthHeroesByMessageSize(String channelId) {
-    var mapByHeroes = kudosFacade.findAllCurrentMonthKudosBy(channelId)
+  private Map<String, List<KudosDto>> sortedCurrentMonthHeroesByMessageSize(String channelId, LocalDate date) {
+    var mapByHeroes = kudosFacade.findAllGivenMonthKudosBy(channelId, date)
         .stream()
         .collect(groupingBy(KudosDto::username, toList()));
     return mapByHeroes.entrySet()
@@ -141,9 +141,9 @@ public class SlackMessageFacade {
     return blocks;
   }
 
-  private List<LayoutBlock> buildBlocks(Map<String, List<KudosDto>> groupedHeroes) {
+  private List<LayoutBlock> buildBlocks(Map<String, List<KudosDto>> groupedHeroes, LocalDate date) {
     var blocks = new ArrayList<LayoutBlock>();
-    blocks.add(HeaderBlock.builder().text(currentMonthHeroHeader()).build());
+    blocks.add(HeaderBlock.builder().text(givenMonthHeroHeader(date)).build());
     blocks.add(DividerBlock.builder().build());
     blocks.addAll(addCurrentMonthLeaderboard(groupedHeroes));
     blocks.add(DividerBlock.builder().build());
@@ -187,8 +187,8 @@ public class SlackMessageFacade {
     return blocks;
   }
 
-  private PlainTextObject currentMonthHeroHeader() {
-    var currentMonth = LocalDate.now().getMonth().getDisplayName(TextStyle.FULL, Locale.ENGLISH);
+  private PlainTextObject givenMonthHeroHeader(LocalDate date) {
+    var currentMonth = date.getMonth().getDisplayName(TextStyle.FULL, Locale.ENGLISH);
     return PlainTextObject.builder()
         .text(currentMonth + " heroes of the month \uD83E\uDDB8")
         .emoji(true)
