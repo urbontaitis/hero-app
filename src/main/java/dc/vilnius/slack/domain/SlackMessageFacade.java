@@ -80,10 +80,6 @@ public class SlackMessageFacade {
     }
   }
 
-  public SlackMessage parseMessage(String commandArgText) {
-    return CommandParser.parse(commandArgText);
-  }
-
   private void buildAndPostHeroesLeaderboard(String channelId, String requestedBy, List<LayoutBlock> blocks, Map<String, List<KudosDto>> sortedHeroesByMessageSize) {
     blocks.addAll(buildBlocks(sortedHeroesByMessageSize));
     blocks.addAll(requestedByMessage(requestedBy));
