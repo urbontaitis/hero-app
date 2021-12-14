@@ -1,6 +1,8 @@
 micronaut:
   application:
     name: hero
+  server:
+    port: ${PORT:8080}
   router:
     static-resources:
       swagger:
@@ -11,7 +13,7 @@ micronaut:
         mapping: /swagger-ui/**
 datasources:
   default:
-    url: ${DATABASE_URL:`jdbc:postgresql://localhost:5432/hero_votes`}
+    url: ${DATABASE_URL:`jdbc:postgresql://localhost:32770/hero_vote`}
     username: ${DATABASE_USER:`hero`}
     password: ${DATABASE_PASSWORD:`hero`}
 jpa:
