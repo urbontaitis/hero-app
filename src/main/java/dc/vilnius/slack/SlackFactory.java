@@ -57,9 +57,17 @@ public class SlackFactory {
         slackMessageFacade.handleHeroOfTheMonth(channelId, userId, date);
         return ctx.ack("Working on it!");
       } else {
-        return ctx.ack("It's too soon to reveal this month heroes! Available from: "
+        return ctx.ack("It's too early to reveal heroes! Available from: "
             + heroesLeaderBoardAvailableFrom(date));
       }
+    });
+
+    app.command("/heroes-of-the-year", (req, ctx) -> {
+      var channelId = req.getPayload().getChannelId();
+      var userId = req.getPayload().getUserId();
+
+      slackMessageFacade.handleHeroOfTheYear(channelId, userId);
+      return ctx.ack("Working on it!");
     });
 
     return app;
