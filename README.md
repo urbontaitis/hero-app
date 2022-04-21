@@ -1,7 +1,9 @@
 # Hero API
 
 ## Run
+
 Set these environment variables:
+
 MICRONAUT_ENVIRONMENTS=dev;
 
 Start local database
